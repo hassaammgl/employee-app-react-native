@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
-import { useRouter } from "expo-router";
+import { Redirect, useRouter } from "expo-router";
 
 const index = () => {
 	const router = useRouter();
@@ -14,35 +14,36 @@ const index = () => {
 	};
 
 	return (
-		<View style={styles.container}>
-			<View style={styles.imageContainer}>
-				<Image
-					source={require("../assets/welcome.png")}
-					style={styles.image}
-				/>
-			</View>
+		<Redirect href="/(home)" />
+		// <View style={styles.container}>
+		// 	<View style={styles.imageContainer}>
+		// 		<Image
+		// 			source={require("../assets/welcome.png")}
+		// 			style={styles.image}
+		// 		/>
+		// 	</View>
 
-			<Text style={styles.title}>Welcome to the KaamWala</Text>
+		// 	<Text style={styles.title}>Welcome to the KaamWala</Text>
 
-			{/* Subtitle Text */}
-			<Text style={styles.subtitle}>
-				Manage your workforce efficiently, all in one place
-			</Text>
-			<View>
-				<TouchableOpacity
-					onPress={handleCreateAccount}
-					style={styles.createAccountButton}
-				>
-					<Text style={styles.createAccountText}>Create account</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					onPress={handleSignIn}
-					style={styles.loginButton}
-				>
-					<Text style={styles.loginText}>Log In</Text>
-				</TouchableOpacity>
-			</View>
-		</View>
+		// 	{/* Subtitle Text */}
+		// 	<Text style={styles.subtitle}>
+		// 		Manage your workforce efficiently, all in one place
+		// 	</Text>
+		// 	<View>
+		// 		<TouchableOpacity
+		// 			onPress={handleCreateAccount}
+		// 			style={styles.createAccountButton}
+		// 		>
+		// 			<Text style={styles.createAccountText}>Create account</Text>
+		// 		</TouchableOpacity>
+		// 		<TouchableOpacity
+		// 			onPress={handleSignIn}
+		// 			style={styles.loginButton}
+		// 		>
+		// 			<Text style={styles.loginText}>Log In</Text>
+		// 		</TouchableOpacity>
+		// 	</View>
+		// </View>
 	);
 };
 

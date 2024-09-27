@@ -7,7 +7,7 @@ import {
 	TouchableOpacity,
 	ToastAndroid,
 } from "react-native";
-import { useRouter, Navigator } from "expo-router";
+import { useRouter } from "expo-router";
 import { apiCalls } from "../../serverfuncs";
 import { store } from "../../storage";
 
@@ -18,29 +18,29 @@ const LoginScreen = () => {
 	const router = useRouter();
 
 	const handleLogin = async () => {
-		if (email === "" || password === "") {
-			ToastAndroid.show("Please fill in all fields", ToastAndroid.SHORT);
-			return;
-		}
-		const res = await apiCalls.loginUser({ email, password });
-		console.log(res.status);
-		console.log(res.data);
+		// if (email === "" || password === "") {
+		// 	ToastAndroid.show("Please fill in all fields", ToastAndroid.SHORT);
+		// 	return;
+		// }
+		// const res = await apiCalls.loginUser({ email, password });
+		// console.log(res.status);
+		// console.log(res.data);
 
-		const getToken = await store.get("@EmPtoken");
-		console.log("checking => ", getToken);
+		// const getToken = await store.get("@EmPtoken");
+		// console.log("checking => ", getToken);
 
-		if (res.status === 200) {
-			if (getToken === null) {
-				await store.set("@EmPtoken", res.data.token);
-				console.log("my token", await store.get("@EmPtoken"));
-			}
-			ToastAndroid.show(res.data?.message, ToastAndroid.SHORT);
+		// if (res.status === 200) {
+		// 	if (getToken === null) {
+		// 		await store.set("@EmPtoken", res.data.token);
+		// 		console.log("my token", await store.get("@EmPtoken"));
+		// 	}
+		// 	ToastAndroid.show(res.data?.message, ToastAndroid.SHORT);
 
-			router.push("/(home)");
-		}
-		if (res.status === 404) {
-			ToastAndroid.show(res?.response.data.message, ToastAndroid.SHORT);
-		}
+		router.push("/(home)");
+		// }
+		// if (res.status === 404) {
+		// 	ToastAndroid.show(res?.response.data.message, ToastAndroid.SHORT);
+		// }
 	};
 
 	return (

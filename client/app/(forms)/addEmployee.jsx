@@ -11,7 +11,7 @@ import {
 import { useRouter } from "expo-router";
 import { apiCalls } from "../../serverfuncs";
 
-const RegisterScreen = () => {
+const addEmployee = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
@@ -89,10 +89,6 @@ const RegisterScreen = () => {
 				ToastAndroid.show("Something went wrong.", ToastAndroid.SHORT);
 			}
 		}
-	};
-
-	const handlePressLogin = () => {
-		router.push("/(auth)/login");
 	};
 
 	return (
@@ -227,4 +223,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default RegisterScreen;
+export default addEmployee;
