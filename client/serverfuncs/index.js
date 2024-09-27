@@ -23,7 +23,16 @@ export const apiCalls = {
             city,
             cnic,
         }).catch((err) => {
-            console.log(JSON.stringify(err));
+            console.log(err);
+        });
+    },
+    loginUser: async ({ email, password }) => {
+        return await axios.post(`${api}/login`, {
+            email,
+            password
+        }).catch((err) => {
+            console.log(err);
+            return err;
         });
     }
 }

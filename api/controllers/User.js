@@ -65,32 +65,43 @@ export const registerUser = async (req, res) => {
 
 
 export const loginUser = async (req, res) => {
+
+    console.log("logging in user");
     const { email, password } = req.body;
+
+    console.log("finding email");
+
     const user = await User.findOne({ email });
-    if (!user) {
+    console.log("user", user);
+
+    if (user === null) {
+        console.log("user not found");
         return res.status(StatusCodes.NOT_FOUND).json({
             success: false,
             error: getReasonPhrase(StatusCodes.NOT_FOUND),
             message: "User not found"
         });
     }
+    console.log("comparing password");
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+        console.log("invalid credentials");
+        return res.status(StatusCodes.UNAUTHORIZED).json({
+            success: false,
+            error: getReasonPhrase(StatusCodes.UNAUTHORIZED),
+            message: "Invalid credentials"
+        });
+    }
     else {
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-        if (!isPasswordValid) {
-            return res.status(StatusCodes.UNAUTHORIZED).json({
-                success: false,
-                error: getReasonPhrase(StatusCodes.UNAUTHORIZED),
-                message: "Invalid credentials"
-            });
-        }
-        else {
-            const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || JWT_SECRET, { expiresIn: "1d" });
-            res.status(StatusCodes.OK).json({
-                success: true,
-                message: "User logged in successfully",
-                error: null,
-                token,
-            });
-        }
+        console.log("genrating token");
+
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || JWT_SECRET, { expiresIn: "1d" });
+        console.log("user logged in successfully");
+        res.status(StatusCodes.OK).json({
+            success: true,
+            message: "User logged in successfully",
+            error: null,
+            token,
+        });
     }
 };

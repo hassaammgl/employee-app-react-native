@@ -10,7 +10,7 @@ const ip = os.networkInterfaces().wlx00e0410d9393[0].address;
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(morgan("common"));
+app.use(morgan("combined"));
 
 connectDB();
 

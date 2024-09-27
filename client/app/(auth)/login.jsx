@@ -5,9 +5,11 @@ import {
 	TextInput,
 	StyleSheet,
 	TouchableOpacity,
-	Alert,
+	ToastAndroid,
 } from "react-native";
-import { useRouter } from "expo-router";
+import { useRouter, Navigator } from "expo-router";
+import { apiCalls } from "../../serverfuncs";
+import { store } from "../../storage";
 
 const LoginScreen = () => {
 	const [email, setEmail] = useState("");
@@ -15,20 +17,35 @@ const LoginScreen = () => {
 
 	const router = useRouter();
 
-	const handleLogin = () => {
+	const handleLogin = async () => {
 		if (email === "" || password === "") {
-			Alert.alert("Missing Fields", "Please fill out all fields.");
+			ToastAndroid.show("Please fill in all fields", ToastAndroid.SHORT);
 			return;
 		}
-		Alert.alert("Success", "Login Successful!");
-		// Handle login logic here (e.g., API call)
+		const res = await apiCalls.loginUser({ email, password });
+		console.log(res.status);
+		console.log(res.data);
+
+		const getToken = await store.get("@EmPtoken");
+		console.log("checking => ", getToken);
+
+		if (res.status === 200) {
+			if (getToken === null) {
+				await store.set("@EmPtoken", res.data.token);
+				console.log("my token", await store.get("@EmPtoken"));
+			}
+			ToastAndroid.show(res.data?.message, ToastAndroid.SHORT);
+
+			router.push("/(home)");
+		}
+		if (res.status === 404) {
+			ToastAndroid.show(res?.response.data.message, ToastAndroid.SHORT);
+		}
 	};
 
 	return (
 		<View style={styles.container}>
 			<Text style={styles.title}>Log in</Text>
-
-			{/* Email Input */}
 			<TextInput
 				style={styles.input}
 				placeholder="Email address"
