@@ -36,7 +36,7 @@ const userSchema = new mongoose.Schema({
     },
     workers: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Worker'
+        ref: 'Employee'
     }]
 });
 

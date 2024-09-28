@@ -14,7 +14,7 @@ const index = () => {
 	};
 
 	return (
-		<Redirect href="/(home)" />
+		<Redirect href="/(forms)/addEmployee" />
 		// <View style={styles.container}>
 		// 	<View style={styles.imageContainer}>
 		// 		<Image
