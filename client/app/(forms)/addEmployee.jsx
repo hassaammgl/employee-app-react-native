@@ -29,6 +29,7 @@ const addEmployee = () => {
 	const [salary, setSalary] = useState("");
 	const [designation, setDesignation] = useState("");
 	const [dutyType, setDutyType] = useState("");
+	const [workDiscription, setWorkDiscription] = useState("");
 
 	const router = useRouter();
 
@@ -43,7 +44,11 @@ const addEmployee = () => {
 			salary,
 			designation,
 			dutyType,
+			// owner: owner || "None",
+			owner: "None",
+			workDiscription: workDiscription || "None",
 		};
+		console.log(employeeData);
 
 		const response = await apiCalls.addEmployee(employeeData);
 
@@ -86,6 +91,17 @@ const addEmployee = () => {
 				onChangeText={(text) => setAddress(text)}
 				placeholder="Address"
 			/>
+			<Dropdown
+				style={styles.input}
+				data={data}
+				labelField="label"
+				valueField="value"
+				placeholder="Duty Type"
+				value={dutyType}
+				onChange={(item) => {
+					setDutyType(item.value);
+				}}
+			/>
 			<TextInput
 				style={styles.input}
 				value={city}
@@ -113,17 +129,14 @@ const addEmployee = () => {
 				placeholder="Designation"
 			/>
 
-			<Dropdown
-				style={styles.input}
-				data={data}
-				labelField="label"
-				valueField="value"
-				placeholder="Duty Type"
-				value={dutyType}
-				onChange={(item) => {
-					setDutyType(item.value);
-				}}
-			/>
+			{dutyType === "workRate" && (
+				<TextInput
+					style={styles.input}
+					value={workDiscription}
+					onChangeText={(text) => setWorkDiscription(text)}
+					placeholder="Work Discription"
+				/>
+			)}
 			<TouchableOpacity
 				style={styles.createAccountButton}
 				onPress={handleRegisterEmployee}

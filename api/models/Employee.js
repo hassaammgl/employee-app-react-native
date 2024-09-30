@@ -50,6 +50,10 @@ const employeeSchema = new mongoose.Schema({
     boss: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
+    },
+    workDiscription: {
+        type: String,
+        default: "None"
     }
 }, {
     timeStamps: true

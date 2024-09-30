@@ -1,5 +1,5 @@
 import { StatusCodes, getReasonPhrase } from "http-status-codes";
-import Employee from "../models/Employee.js";
+import { Employee } from "../models/Employee.js";
 
 
 export const registerEmployee = {
@@ -15,7 +15,8 @@ export const registerEmployee = {
             salary,
             designation,
             dutyType,
-            owner
+            owner,
+            workDiscription
         } = req.body;
         const isEmployeeExist = await Employee.findOne({ cnic });
         if (isEmployeeExist) {
@@ -37,7 +38,8 @@ export const registerEmployee = {
                     salary,
                     designation,
                     dutyType,
-                    boss: owner
+                    boss: owner,
+                    workDiscription
                 });
                 await newEmployee.save();
                 return res.status(StatusCodes.CREATED).json({
