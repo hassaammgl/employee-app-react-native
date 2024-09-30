@@ -9,7 +9,15 @@ import {
 	ToastAndroid,
 } from "react-native";
 import { useRouter } from "expo-router";
+import { Dropdown } from "react-native-element-dropdown";
 import { apiCalls } from "../../serverfuncs";
+
+const data = [
+	{ label: "Day wise", value: "DayWise" },
+	{ label: "Hourly", value: "Hourly" },
+	{ label: "Monthly", value: "Monthly" },
+	{ label: "Work Rate", value: "workRate" },
+];
 
 const addEmployee = () => {
 	const [firstName, setFirstName] = useState("");
@@ -24,7 +32,31 @@ const addEmployee = () => {
 
 	const router = useRouter();
 
-	const handleRegisterEmployee = async () => {};
+	const handleRegisterEmployee = async () => {
+		const employeeData = {
+			firstName,
+			lastName,
+			phoneNumber,
+			address,
+			city,
+			cnic,
+			salary,
+			designation,
+			dutyType,
+		};
+
+		const response = await apiCalls.addEmployee(employeeData);
+
+		if (response.success) {
+			ToastAndroid.show(
+				"Employee added successfully",
+				ToastAndroid.SHORT
+			);
+			router.back();
+		} else {
+			ToastAndroid.show("Failed to add employee", ToastAndroid.SHORT);
+		}
+	};
 
 	return (
 		<ScrollView style={styles.container}>
@@ -80,13 +112,18 @@ const addEmployee = () => {
 				onChangeText={(text) => setDesignation(text)}
 				placeholder="Designation"
 			/>
-			<TextInput
-				style={styles.input}
-				value={dutyType}
-				onChangeText={(text) => setDutyType(text)}
-				placeholder="Duty Type"
-			/>
 
+			<Dropdown
+				style={styles.input}
+				data={data}
+				labelField="label"
+				valueField="value"
+				placeholder="Duty Type"
+				value={dutyType}
+				onChange={(item) => {
+					setDutyType(item.value);
+				}}
+			/>
 			<TouchableOpacity
 				style={styles.createAccountButton}
 				onPress={handleRegisterEmployee}

@@ -34,5 +34,31 @@ export const apiCalls = {
             console.log(err);
             return err;
         });
+    },
+    addEmployee: async ({
+        firstName,
+        lastName,
+        phoneNumber,
+        address,
+        city,
+        cnic,
+        salary,
+        designation,
+        dutyType,
+    }) => {
+        return await axios.post(`${api}/addEmployee`, {
+            firstName,
+            lastName,
+            phoneNumber,
+            address,
+            city,
+            cnic,
+            salary,
+            designation,
+            dutyType,
+        }).catch((err) => {
+            console.log(err);
+            return err;
+        });
     }
 }

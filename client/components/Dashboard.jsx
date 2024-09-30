@@ -11,13 +11,7 @@ import {
 } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React from "react";
-import {
-	View,
-	Text,
-	StyleSheet,
-	TouchableOpacity,
-	Linking,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 const Header = () => {
 	return (
@@ -50,24 +44,7 @@ const PresentEmployeesCard = ({ presentEmployees }) => {
 };
 
 const AttenListCard = () => {
-	const handlePress = () => {
-		let phoneNumber = "1234567890";
-		let phoneNumberUrl = `tel:${phoneNumber}`;
-		// Check if the app can handle the call request
-		Linking.canOpenURL(phoneNumberUrl)
-			.then((supported) => {
-				if (!supported) {
-					Alert.alert(
-						"Error",
-						`Phone number is not available: ${phoneNumber}`
-					);
-				} else {
-					// Open the phone call screen
-					return Linking.openURL(phoneNumberUrl);
-				}
-			})
-			.catch((err) => console.error("An error occurred", err));
-	};
+	const handlePress = () => {};
 	return (
 		<View style={styles.AttenListCardContainer}>
 			<TouchableOpacity
