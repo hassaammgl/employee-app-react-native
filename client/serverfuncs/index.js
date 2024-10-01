@@ -44,8 +44,7 @@ export const apiCalls = {
         cnic,
         salary,
         designation,
-        dutyType,
-        workDiscription,
+        workType,
         owner,
     }) => {
         return await axios.post(`${api}/addEmployee`, {
@@ -57,9 +56,8 @@ export const apiCalls = {
             cnic,
             salary,
             designation,
-            dutyType,
+            workType,
             owner,
-            workDiscription,
         }).catch((err) => {
             console.log(err);
             return err;

@@ -1,5 +1,6 @@
 import { StatusCodes, getReasonPhrase } from "http-status-codes";
 import { Employee } from "../models/Employee.js";
+import { User } from "../models/User.js";
 
 
 export const registerEmployee = {
@@ -14,11 +15,11 @@ export const registerEmployee = {
             cnic,
             salary,
             designation,
-            dutyType,
+            workType,
             owner,
-            workDiscription
         } = req.body;
         const isEmployeeExist = await Employee.findOne({ cnic });
+        console.log("Not exists ", isEmployeeExist);
         if (isEmployeeExist) {
             return res.status(StatusCodes.CONFLICT).json({
                 success: false,
@@ -28,6 +29,7 @@ export const registerEmployee = {
         }
         else {
             try {
+                const user = await User.find();
                 const newEmployee = new Employee({
                     firstName,
                     lastName,
@@ -37,9 +39,8 @@ export const registerEmployee = {
                     cnic,
                     salary,
                     designation,
-                    dutyType,
-                    boss: owner,
-                    workDiscription
+                    workType,
+                    boss: user._id
                 });
                 await newEmployee.save();
                 return res.status(StatusCodes.CREATED).json({

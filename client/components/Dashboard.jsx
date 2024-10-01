@@ -44,11 +44,19 @@ const PresentEmployeesCard = ({ presentEmployees }) => {
 };
 
 const AttenListCard = () => {
-	const handlePress = () => {};
+	const router = useRouter();
+
+	const handleListPress = () => {
+		router.push("/(lists)/Employes");
+	};
+
+	const handleAttendencePress = () => {
+		router.push("/(lists)/Attendance");
+	};
 	return (
 		<View style={styles.AttenListCardContainer}>
 			<TouchableOpacity
-				onPress={handlePress}
+				onPress={handleListPress}
 				style={styles.AttenListCards}
 			>
 				<View style={styles.AttenListCardsIcon}>
@@ -56,7 +64,10 @@ const AttenListCard = () => {
 				</View>
 				<Text style={styles.AttenListCardsText}>Empoloyee List</Text>
 			</TouchableOpacity>
-			<TouchableOpacity style={styles.AttenListCards}>
+			<TouchableOpacity
+				onPress={handleAttendencePress}
+				style={styles.AttenListCards}
+			>
 				<View style={styles.AttenListCardsIcon}>
 					<FontAwesome6 name="user-check" size={24} color="black" />
 				</View>
@@ -67,9 +78,26 @@ const AttenListCard = () => {
 };
 
 const ReportsCard = () => {
+	const router = useRouter();
+	const handleAttendenceReportPress = () => {
+		router.push("/(reports)/Attendance");
+	};
+	const handleDesignationPress = () => {
+		router.push("/(lists)/Designations");
+	};
+	const handleSalaryPress = () => {
+		router.push("/(reports)/Salary");
+	};
+	const handleOvertimePress = () => {
+		router.push("/(reports)/OverTime");
+	};
+
 	return (
 		<View style={styles.ReportsCardContainer}>
-			<TouchableOpacity style={styles.ReportsCards}>
+			<TouchableOpacity
+				onPress={handleAttendenceReportPress}
+				style={styles.ReportsCards}
+			>
 				<View style={styles.ReportsCardsIcon}>
 					<Octicons name="repo" size={24} color="white" />
 				</View>
@@ -78,7 +106,10 @@ const ReportsCard = () => {
 					<Entypo name="chevron-right" size={24} color="white" />
 				</View>
 			</TouchableOpacity>
-			<TouchableOpacity style={styles.ReportsCards}>
+			<TouchableOpacity
+				onPress={handleDesignationPress}
+				style={styles.ReportsCards}
+			>
 				<View style={styles.ReportsCardsIcon}>
 					<Fontisto name="persons" size={24} color="white" />
 				</View>
@@ -87,7 +118,10 @@ const ReportsCard = () => {
 					<Entypo name="chevron-right" size={24} color="white" />
 				</View>
 			</TouchableOpacity>
-			<TouchableOpacity style={styles.ReportsCards}>
+			<TouchableOpacity
+				onPress={handleSalaryPress}
+				style={styles.ReportsCards}
+			>
 				<View style={styles.ReportsCardsIcon}>
 					<FontAwesome5
 						name="money-bill-wave-alt"
@@ -100,7 +134,10 @@ const ReportsCard = () => {
 					<Entypo name="chevron-right" size={24} color="white" />
 				</View>
 			</TouchableOpacity>
-			<TouchableOpacity style={styles.ReportsCards}>
+			<TouchableOpacity
+				onPress={handleOvertimePress}
+				style={styles.ReportsCards}
+			>
 				<View style={styles.ReportsCardsIcon}>
 					<Ionicons name="time-sharp" size={24} color="white" />
 				</View>
@@ -119,7 +156,7 @@ const AddEmployees = () => {
 		<View style={styles.EmployeesCardContainer}>
 			<View>
 				<TouchableOpacity
-					onPress={() => router.replace("/(forms)/addEmployee")}
+					onPress={() => router.push("/(forms)/addEmployee")}
 					style={styles.EmployeesCards}
 				>
 					<View style={styles.EmployeesCardsIcon}>
@@ -131,7 +168,10 @@ const AddEmployees = () => {
 					</View>
 					<Text style={styles.EmployeesCardsText}>Add Employee</Text>
 				</TouchableOpacity>
-				<TouchableOpacity style={styles.EmployeesCards}>
+				<TouchableOpacity
+					onPress={() => router.push("/(reports)/Details")}
+					style={styles.EmployeesCards}
+				>
 					<View style={styles.EmployeesCardsIcon}>
 						<MaterialCommunityIcons
 							name="account-details"
@@ -145,13 +185,19 @@ const AddEmployees = () => {
 				</TouchableOpacity>
 			</View>
 			<View>
-				<TouchableOpacity style={styles.EmployeesCards}>
+				<TouchableOpacity
+					onPress={() => router.push("/(forms)/editEmployee")}
+					style={styles.EmployeesCards}
+				>
 					<View style={styles.EmployeesCardsIcon}>
 						<AntDesign name="edit" size={24} color="black" />
 					</View>
 					<Text style={styles.EmployeesCardsText}>Edit Employee</Text>
 				</TouchableOpacity>
-				<TouchableOpacity style={styles.EmployeesCards}>
+				<TouchableOpacity
+					onPress={() => router.push("/(reports)/Calls")}
+					style={styles.EmployeesCards}
+				>
 					<View style={styles.EmployeesCardsIcon}>
 						<MaterialCommunityIcons
 							name="account-details"

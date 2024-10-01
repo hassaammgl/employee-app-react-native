@@ -33,7 +33,7 @@ const employeeSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    dutyType: {
+    workType: {
         type: String,
         required: true
     },
@@ -51,10 +51,6 @@ const employeeSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
-    workDiscription: {
-        type: String,
-        default: "None"
-    }
 }, {
     timeStamps: true
 });

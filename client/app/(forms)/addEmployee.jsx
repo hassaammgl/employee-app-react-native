@@ -9,15 +9,7 @@ import {
 	ToastAndroid,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { Dropdown } from "react-native-element-dropdown";
 import { apiCalls } from "../../serverfuncs";
-
-const data = [
-	{ label: "Day wise", value: "DayWise" },
-	{ label: "Hourly", value: "Hourly" },
-	{ label: "Monthly", value: "Monthly" },
-	{ label: "Work Rate", value: "workRate" },
-];
 
 const addEmployee = () => {
 	const [firstName, setFirstName] = useState("");
@@ -28,8 +20,7 @@ const addEmployee = () => {
 	const [cnic, setCnic] = useState("");
 	const [salary, setSalary] = useState("");
 	const [designation, setDesignation] = useState("");
-	const [dutyType, setDutyType] = useState("");
-	const [workDiscription, setWorkDiscription] = useState("");
+	const [workType, setWorkType] = useState("");
 
 	const router = useRouter();
 
@@ -43,10 +34,9 @@ const addEmployee = () => {
 			cnic,
 			salary,
 			designation,
-			dutyType,
+			workType,
 			// owner: owner || "None",
 			owner: "None",
-			workDiscription: workDiscription || "None",
 		};
 		console.log(employeeData);
 
@@ -91,16 +81,11 @@ const addEmployee = () => {
 				onChangeText={(text) => setAddress(text)}
 				placeholder="Address"
 			/>
-			<Dropdown
+			<TextInput
 				style={styles.input}
-				data={data}
-				labelField="label"
-				valueField="value"
-				placeholder="Duty Type"
-				value={dutyType}
-				onChange={(item) => {
-					setDutyType(item.value);
-				}}
+				placeholder="Work Type"
+				value={workType}
+				onChangeText={(text) => setWorkType(text)}
 			/>
 			<TextInput
 				style={styles.input}
@@ -129,21 +114,11 @@ const addEmployee = () => {
 				placeholder="Designation"
 			/>
 
-			{dutyType === "workRate" && (
-				<TextInput
-					style={styles.input}
-					value={workDiscription}
-					onChangeText={(text) => setWorkDiscription(text)}
-					placeholder="Work Discription"
-				/>
-			)}
 			<TouchableOpacity
 				style={styles.createAccountButton}
 				onPress={handleRegisterEmployee}
 			>
-				<Text style={styles.createAccountButtonText}>
-					Create account
-				</Text>
+				<Text style={styles.createAccountButtonText}>Add</Text>
 			</TouchableOpacity>
 		</ScrollView>
 	);
