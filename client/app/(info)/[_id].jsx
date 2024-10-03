@@ -1,14 +1,20 @@
-import { StyleSheet } from "react-native";
-import React from "react";
+import { StyleSheet, Text } from "react-native";
+import React, { Suspense, lazy } from "react";
 import Header from "../../components/Header";
 import { LinearGradient } from "expo-linear-gradient";
-const Details = () => {
+import { useLocalSearchParams } from "expo-router";
+
+const page = () => {
+	const { _id } = useLocalSearchParams();
 	return (
 		<LinearGradient
 			colors={["rgb(0,0,0)", "transparent"]}
 			style={styles.container}
 		>
 			<Header text={"Employee Details"} />
+			<Suspense fallback={<Text>Loading...</Text>}>
+				<Text>DAta is {_id}</Text>
+			</Suspense>
 		</LinearGradient>
 	);
 };
@@ -20,4 +26,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default Details;
+export default page;
