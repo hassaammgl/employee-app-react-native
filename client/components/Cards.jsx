@@ -1,6 +1,7 @@
 import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
 import React from "react";
 import { Link } from "expo-router";
+import { Entypo } from "@expo/vector-icons";
 
 const EmployeeListCard = ({ data }) => {
 	return (
@@ -19,6 +20,9 @@ const EmployeeListCard = ({ data }) => {
 					<Text style={styles.EmployeeListCardText}>
 						{"data.name"}
 					</Text>
+				</View>
+				<View style={styles.EmployeeListCardIcon}>
+					<Entypo name="chevron-right" size={24} color="white" />
 				</View>
 			</TouchableOpacity>
 		</Link>
@@ -44,6 +48,8 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		marginRight: 10,
+		alignItems: "center",
+		justifyContent: "center",
 	},
 	EmployeeListCardAvatarText: {
 		fontSize: 20,
@@ -57,6 +63,16 @@ const styles = StyleSheet.create({
 	EmployeeListCardText: {
 		fontSize: 20,
 		color: "#000",
+	},
+	EmployeeListCardIcon: {
+		backgroundColor: "black",
+		width: 40,
+		height: 40,
+		alignItems: "center",
+		borderRadius: 10,
+		justifyContent: "center",
+		margin: 5,
+		marginRight: 10,
 	},
 });
 
