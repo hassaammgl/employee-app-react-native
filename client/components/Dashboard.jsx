@@ -169,7 +169,7 @@ const AddEmployees = () => {
 					<Text style={styles.EmployeesCardsText}>Add Employee</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
-					onPress={() => router.push("/(reports)/Details")}
+					onPress={() => router.push("/(lists)/Employes")}
 					style={styles.EmployeesCards}
 				>
 					<View style={styles.EmployeesCardsIcon}>
@@ -186,7 +186,7 @@ const AddEmployees = () => {
 			</View>
 			<View>
 				<TouchableOpacity
-					onPress={() => router.push("/(forms)/editEmployee")}
+					onPress={() => router.push("/(lists)/EditEmployee")}
 					style={styles.EmployeesCards}
 				>
 					<View style={styles.EmployeesCardsIcon}>

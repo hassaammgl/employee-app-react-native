@@ -3,6 +3,17 @@ import React from "react";
 import { Link } from "expo-router";
 import { Entypo } from "@expo/vector-icons";
 
+const getRGBfromString = (text) => {
+	let hash = 0;
+	for (let i = 0; i < text.length; i++) {
+		hash = text.charCodeAt(i) + ((hash << 5) - hash);
+	}
+	const r = (hash & 0xff0000) >> 16;
+	const g = (hash & 0x00ff00) >> 8;
+	const b = hash & 0x0000ff;
+	return `rgb(${r}, ${g}, ${b})`;
+};
+
 const EmployeeListCard = ({ data }) => {
 	return (
 		<Link
@@ -13,7 +24,126 @@ const EmployeeListCard = ({ data }) => {
 			asChild
 		>
 			<TouchableOpacity style={styles.EmployeeListCardContainer}>
-				<View style={styles.EmployeeListCardAvatar}>
+				<View
+					style={{
+						width: 50,
+						height: 50,
+						borderRadius: 25,
+						backgroundColor: getRGBfromString("HAsasasfa"),
+						justifyContent: "center",
+						alignItems: "center",
+						marginRight: 10,
+						alignItems: "center",
+						justifyContent: "center",
+					}}
+				>
+					<Text style={styles.EmployeeListCardAvatarText}>A</Text>
+				</View>
+				<View style={styles.EmployeeListCardTextContainer}>
+					<Text style={styles.EmployeeListCardText}>
+						{"data.name"}
+					</Text>
+				</View>
+				<View style={styles.EmployeeListCardIcon}>
+					<Entypo name="chevron-right" size={24} color="white" />
+				</View>
+			</TouchableOpacity>
+		</Link>
+	);
+};
+
+const MarkAttendanceCard = () => {
+	return (
+		<TouchableOpacity
+			onPress={() => {}}
+			style={styles.EmployeeListCardContainer}
+		>
+			<View
+				style={{
+					width: 50,
+					height: 50,
+					borderRadius: 25,
+					backgroundColor: getRGBfromString("HAsasasfa"),
+					justifyContent: "center",
+					alignItems: "center",
+					marginRight: 10,
+					alignItems: "center",
+					justifyContent: "center",
+				}}
+			>
+				<Text style={styles.EmployeeListCardAvatarText}>A</Text>
+			</View>
+			<View style={styles.EmployeeListCardTextContainer}>
+				<Text style={styles.EmployeeListCardText}>Name</Text>
+			</View>
+			<View style={styles.EmployeeListCardIcon}>
+				<Entypo name="check" size={24} color="white" />
+			</View>
+		</TouchableOpacity>
+	);
+};
+
+const EditEmployeeListCard = ({ data }) => {
+	return (
+		<Link
+			href={{
+				pathname: "/(forms)/editEmployee",
+				params: { _id: "sfdsgsdgshgsdgsdfshgbv cbhdfhd" },
+			}}
+			asChild
+		>
+			<TouchableOpacity style={styles.EmployeeListCardContainer}>
+				<View
+					style={{
+						width: 50,
+						height: 50,
+						borderRadius: 25,
+						backgroundColor: getRGBfromString("HAsasasfa"),
+						justifyContent: "center",
+						alignItems: "center",
+						marginRight: 10,
+						alignItems: "center",
+						justifyContent: "center",
+					}}
+				>
+					<Text style={styles.EmployeeListCardAvatarText}>A</Text>
+				</View>
+				<View style={styles.EmployeeListCardTextContainer}>
+					<Text style={styles.EmployeeListCardText}>
+						{"data.name"}
+					</Text>
+				</View>
+				<View style={styles.EmployeeListCardIcon}>
+					<Entypo name="chevron-right" size={24} color="white" />
+				</View>
+			</TouchableOpacity>
+		</Link>
+	);
+};
+
+const CallEmployeeListCard = ({ data }) => {
+	return (
+		<Link
+			href={{
+				pathname: "/(forms)/editEmployee",
+				params: { _id: "sfdsgsdgshgsdgsdfshgbv cbhdfhd" },
+			}}
+			asChild
+		>
+			<TouchableOpacity style={styles.EmployeeListCardContainer}>
+				<View
+					style={{
+						width: 50,
+						height: 50,
+						borderRadius: 25,
+						backgroundColor: getRGBfromString("HAsasasfa"),
+						justifyContent: "center",
+						alignItems: "center",
+						marginRight: 10,
+						alignItems: "center",
+						justifyContent: "center",
+					}}
+				>
 					<Text style={styles.EmployeeListCardAvatarText}>A</Text>
 				</View>
 				<View style={styles.EmployeeListCardTextContainer}>
@@ -40,17 +170,6 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "space-between",
 	},
-	EmployeeListCardAvatar: {
-		width: 50,
-		height: 50,
-		borderRadius: 25,
-		backgroundColor: "#e3e3e3",
-		justifyContent: "center",
-		alignItems: "center",
-		marginRight: 10,
-		alignItems: "center",
-		justifyContent: "center",
-	},
 	EmployeeListCardAvatarText: {
 		fontSize: 20,
 		fontWeight: "bold",
@@ -76,4 +195,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export { EmployeeListCard };
+export { EmployeeListCard, MarkAttendanceCard, EditEmployeeListCard };
