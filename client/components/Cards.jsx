@@ -1,4 +1,10 @@
-import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
+import {
+	TouchableOpacity,
+	Text,
+	StyleSheet,
+	View,
+	Linking,
+} from "react-native";
 import React from "react";
 import { Link } from "expo-router";
 import { Entypo, Feather } from "@expo/vector-icons";
@@ -122,10 +128,25 @@ const EditEmployeeListCard = ({ data }) => {
 };
 
 const CallEmployeeListCard = ({ data }) => {
-	const callEmployee = () => {};
+	const callEmployee = (phoneNumber) => {
+		let phoneNumberUrl = `tel:${phoneNumber}`;
+		Linking.canOpenURL(phoneNumberUrl)
+			.then((supported) => {
+				if (!supported) {
+					Alert.alert(
+						"Error",
+						`Phone Call is not available: ${phoneNumber}`
+					);
+				} else {
+					return Linking.openURL(phoneNumberUrl);
+				}
+			})
+			.catch((err) => console.error("An error occurred", err));
+	};
+
 	return (
 		<TouchableOpacity
-			onPress={callEmployee}
+			onPress={() => callEmployee("547543736584")}
 			style={styles.EmployeeListCardContainer}
 		>
 			<View
