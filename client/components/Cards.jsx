@@ -1,7 +1,7 @@
 import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
 import React from "react";
 import { Link } from "expo-router";
-import { Entypo } from "@expo/vector-icons";
+import { Entypo, Feather } from "@expo/vector-icons";
 
 const getRGBfromString = (text) => {
 	let hash = 0;
@@ -122,40 +122,34 @@ const EditEmployeeListCard = ({ data }) => {
 };
 
 const CallEmployeeListCard = ({ data }) => {
+	const callEmployee = () => {};
 	return (
-		<Link
-			href={{
-				pathname: "/(forms)/editEmployee",
-				params: { _id: "sfdsgsdgshgsdgsdfshgbv cbhdfhd" },
-			}}
-			asChild
+		<TouchableOpacity
+			onPress={callEmployee}
+			style={styles.EmployeeListCardContainer}
 		>
-			<TouchableOpacity style={styles.EmployeeListCardContainer}>
-				<View
-					style={{
-						width: 50,
-						height: 50,
-						borderRadius: 25,
-						backgroundColor: getRGBfromString("HAsasasfa"),
-						justifyContent: "center",
-						alignItems: "center",
-						marginRight: 10,
-						alignItems: "center",
-						justifyContent: "center",
-					}}
-				>
-					<Text style={styles.EmployeeListCardAvatarText}>A</Text>
-				</View>
-				<View style={styles.EmployeeListCardTextContainer}>
-					<Text style={styles.EmployeeListCardText}>
-						{"data.name"}
-					</Text>
-				</View>
-				<View style={styles.EmployeeListCardIcon}>
-					<Entypo name="chevron-right" size={24} color="white" />
-				</View>
-			</TouchableOpacity>
-		</Link>
+			<View
+				style={{
+					width: 50,
+					height: 50,
+					borderRadius: 25,
+					backgroundColor: getRGBfromString("HAsasasfa"),
+					justifyContent: "center",
+					alignItems: "center",
+					marginRight: 10,
+					alignItems: "center",
+					justifyContent: "center",
+				}}
+			>
+				<Text style={styles.EmployeeListCardAvatarText}>A</Text>
+			</View>
+			<View style={styles.EmployeeListCardTextContainer}>
+				<Text style={styles.EmployeeListCardText}>{"data.name"}</Text>
+			</View>
+			<View style={styles.EmployeeListCardIcon}>
+				<Feather name="phone-call" size={24} color="white" />
+			</View>
+		</TouchableOpacity>
 	);
 };
 
@@ -195,4 +189,9 @@ const styles = StyleSheet.create({
 	},
 });
 
-export { EmployeeListCard, MarkAttendanceCard, EditEmployeeListCard };
+export {
+	CallEmployeeListCard,
+	EmployeeListCard,
+	MarkAttendanceCard,
+	EditEmployeeListCard,
+};
