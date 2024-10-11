@@ -8,29 +8,12 @@ import {
 } from "react-native";
 import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { useRouter, Link } from "expo-router";
+import { Link } from "expo-router";
+import { callOnPhoneNumber } from "../utils";
 
 const Profile = ({ data }) => {
-	const router = useRouter();
-
 	const handleCallPress = (phoneNumber) => {
-		let phoneNumberUrl = `tel:${phoneNumber}`;
-		Linking.canOpenURL(phoneNumberUrl)
-			.then((supported) => {
-				if (!supported) {
-					Alert.alert(
-						"Error",
-						`Phone Call is not available: ${phoneNumber}`
-					);
-				} else {
-					return Linking.openURL(phoneNumberUrl);
-				}
-			})
-			.catch((err) => console.error("An error occurred", err));
-	};
-
-	const handleEditPress = () => {
-		router.push("/(forms)/editEmployee");
+		callOnPhoneNumber(phoneNumber);
 	};
 
 	return (
@@ -58,10 +41,7 @@ const Profile = ({ data }) => {
 					}}
 					asChild
 				>
-					<TouchableOpacity
-						onPress={() => router.push("/(forms)/editEmployee")}
-						style={styles.button}
-					>
+					<TouchableOpacity style={styles.button}>
 						<FontAwesome name="edit" size={24} color="white" />
 						<Text style={styles.buttonText}>Edit</Text>
 					</TouchableOpacity>

@@ -8,6 +8,7 @@ import {
 import React from "react";
 import { Link } from "expo-router";
 import { Entypo, Feather } from "@expo/vector-icons";
+import { callOnPhoneNumber } from "../utils";
 
 const getRGBfromString = (text) => {
 	let hash = 0;
@@ -129,19 +130,7 @@ const EditEmployeeListCard = ({ data }) => {
 
 const CallEmployeeListCard = ({ data }) => {
 	const callEmployee = (phoneNumber) => {
-		let phoneNumberUrl = `tel:${phoneNumber}`;
-		Linking.canOpenURL(phoneNumberUrl)
-			.then((supported) => {
-				if (!supported) {
-					Alert.alert(
-						"Error",
-						`Phone Call is not available: ${phoneNumber}`
-					);
-				} else {
-					return Linking.openURL(phoneNumberUrl);
-				}
-			})
-			.catch((err) => console.error("An error occurred", err));
+		callOnPhoneNumber(phoneNumber);
 	};
 
 	return (
@@ -170,6 +159,37 @@ const CallEmployeeListCard = ({ data }) => {
 			<View style={styles.EmployeeListCardIcon}>
 				<Feather name="phone-call" size={24} color="white" />
 			</View>
+		</TouchableOpacity>
+	);
+};
+
+const AttendanceEmployeeListCard = ({ data }) => {
+	return (
+		<TouchableOpacity style={styles.EmployeeListCardContainer}>
+			<View
+				style={{
+					width: 50,
+					height: 50,
+					borderRadius: 25,
+					backgroundColor: getRGBfromString("HAsasasfa"),
+					justifyContent: "center",
+					alignItems: "center",
+					marginRight: 10,
+					alignItems: "center",
+					justifyContent: "center",
+				}}
+			>
+				<Text style={styles.EmployeeListCardAvatarText}>A</Text>
+			</View>
+			<View style={styles.EmployeeListCardTextContainer}>
+				<Text style={styles.EmployeeListCardText}>{"data.name"}</Text>
+			</View>
+			<TouchableOpacity style={styles.EmployeeListCardBtn}>
+				<Text>Presents</Text>
+			</TouchableOpacity>
+			<TouchableOpacity style={styles.EmployeeListCardBtn}>
+				<Text>Absents</Text>
+			</TouchableOpacity>
 		</TouchableOpacity>
 	);
 };
@@ -208,6 +228,16 @@ const styles = StyleSheet.create({
 		margin: 5,
 		marginRight: 10,
 	},
+	EmployeeListCardBtn: {
+		backgroundColor: "black",
+		height: 40,
+		color: "#fff",
+		alignItems: "center",
+		borderRadius: 10,
+		justifyContent: "center",
+		margin: 5,
+		marginRight: 10,
+	},
 });
 
 export {
@@ -215,4 +245,5 @@ export {
 	EmployeeListCard,
 	MarkAttendanceCard,
 	EditEmployeeListCard,
+	AttendanceEmployeeListCard,
 };
