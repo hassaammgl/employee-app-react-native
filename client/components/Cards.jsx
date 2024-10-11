@@ -165,7 +165,7 @@ const CallEmployeeListCard = ({ data }) => {
 
 const AttendanceEmployeeListCard = ({ data }) => {
 	return (
-		<TouchableOpacity style={styles.EmployeeListCardContainer}>
+		<View style={styles.EmployeeListCardContainer}>
 			<View
 				style={{
 					width: 50,
@@ -185,12 +185,12 @@ const AttendanceEmployeeListCard = ({ data }) => {
 				<Text style={styles.EmployeeListCardText}>{"data.name"}</Text>
 			</View>
 			<TouchableOpacity style={styles.EmployeeListCardBtn}>
-				<Text>Presents</Text>
+				<Text style={styles.EmployeeListCardBtnText}>Presents</Text>
 			</TouchableOpacity>
 			<TouchableOpacity style={styles.EmployeeListCardBtn}>
-				<Text>Absents</Text>
+				<Text style={styles.EmployeeListCardBtnText}>Absents</Text>
 			</TouchableOpacity>
-		</TouchableOpacity>
+		</View>
 	);
 };
 
@@ -237,6 +237,10 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		margin: 5,
 		marginRight: 10,
+	},
+	EmployeeListCardBtnText: {
+		margin: 5,
+		color: "#fff",
 	},
 });
 
