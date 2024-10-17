@@ -1,14 +1,9 @@
-import {
-	TouchableOpacity,
-	Text,
-	StyleSheet,
-	View,
-	Linking,
-} from "react-native";
+import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
 import React from "react";
 import { Link } from "expo-router";
 import { Entypo, Feather } from "@expo/vector-icons";
 import { callOnPhoneNumber } from "../utils";
+import axios from "axios";
 
 const getRGBfromString = (text) => {
 	let hash = 0;
@@ -61,10 +56,25 @@ const EmployeeListCard = ({ data }) => {
 	);
 };
 
-const MarkAttendanceCard = () => {
+// [TODO:]
+
+const MarkAttendanceCard = ({ data }) => {
+	const handlePressAttendance = async () => {
+		console.log("marking attendance", data.firstName);
+		const response = await axios.post(
+			"http://192.168.100.40:3000/api/add-attendance",
+			{
+				ownerID:
+					"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MGZjMTA1YTVhNjY4NjgzMGEyYzA2ZSIsImlhdCI6MTcyOTE3NTM4MCwiZXhwIjoxNzI5MjYxNzgwfQ.kdE3pRgjR8CGltt2QlPW5eDvj7fQ7egqh2qxRoq2P7A",
+				employeeId: data._id,
+			}
+		);
+		console.log(response);
+	};
+
 	return (
 		<TouchableOpacity
-			onPress={() => {}}
+			onPress={handlePressAttendance}
 			style={styles.EmployeeListCardContainer}
 		>
 			<View
@@ -72,7 +82,7 @@ const MarkAttendanceCard = () => {
 					width: 50,
 					height: 50,
 					borderRadius: 25,
-					backgroundColor: getRGBfromString("HAsasasfa"),
+					backgroundColor: getRGBfromString(data.firstName),
 					justifyContent: "center",
 					alignItems: "center",
 					marginRight: 10,
@@ -80,10 +90,14 @@ const MarkAttendanceCard = () => {
 					justifyContent: "center",
 				}}
 			>
-				<Text style={styles.EmployeeListCardAvatarText}>A</Text>
+				<Text style={styles.EmployeeListCardAvatarText}>
+					{data.firstName.substring(0, 1)}
+				</Text>
 			</View>
 			<View style={styles.EmployeeListCardTextContainer}>
-				<Text style={styles.EmployeeListCardText}>Name</Text>
+				<Text style={styles.EmployeeListCardText}>
+					{`${data.firstName} ${data.lastName}`}
+				</Text>
 			</View>
 			<View style={styles.EmployeeListCardIcon}>
 				<Entypo name="check" size={24} color="white" />
@@ -137,7 +151,7 @@ const CallEmployeeListCard = ({ data }) => {
 
 	return (
 		<TouchableOpacity
-			onPress={() => callEmployee("547543736584")}
+			onPress={() => callEmployee(data.phoneNumber)}
 			style={styles.EmployeeListCardContainer}
 		>
 			<View
@@ -145,7 +159,7 @@ const CallEmployeeListCard = ({ data }) => {
 					width: 50,
 					height: 50,
 					borderRadius: 25,
-					backgroundColor: getRGBfromString("HAsasasfa"),
+					backgroundColor: getRGBfromString(`${data.firstName}`),
 					justifyContent: "center",
 					alignItems: "center",
 					marginRight: 10,
@@ -153,10 +167,14 @@ const CallEmployeeListCard = ({ data }) => {
 					justifyContent: "center",
 				}}
 			>
-				<Text style={styles.EmployeeListCardAvatarText}>A</Text>
+				<Text style={styles.EmployeeListCardAvatarText}>
+					{data.firstName.substring(0, 1)}
+				</Text>
 			</View>
 			<View style={styles.EmployeeListCardTextContainer}>
-				<Text style={styles.EmployeeListCardText}>{"data.name"}</Text>
+				<Text
+					style={styles.EmployeeListCardText}
+				>{`${data.firstName} ${data.lastName}`}</Text>
 			</View>
 			<View style={styles.EmployeeListCardIcon}>
 				<Feather name="phone-call" size={24} color="white" />
@@ -173,7 +191,7 @@ const AttendanceEmployeeListCard = ({ data }) => {
 					width: 50,
 					height: 50,
 					borderRadius: 25,
-					backgroundColor: getRGBfromString("HAsasasfa"),
+					backgroundColor: getRGBfromString("MAsasasfa"),
 					justifyContent: "center",
 					alignItems: "center",
 					marginRight: 10,
@@ -181,7 +199,7 @@ const AttendanceEmployeeListCard = ({ data }) => {
 					justifyContent: "center",
 				}}
 			>
-				<Text style={styles.EmployeeListCardAvatarText}>A</Text>
+				<Text style={styles.EmployeeListCardAvatarText}>M</Text>
 			</View>
 			<View style={styles.EmployeeListCardTextContainer}>
 				<Text style={styles.EmployeeListCardText}>{"data.name"}</Text>

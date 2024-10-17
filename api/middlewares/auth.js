@@ -8,7 +8,6 @@ export const verifyToken = async (req, res, next) => {
     console.log("verifying token");
 
     const { ownerID, owner } = req.body;
-    console.log(req.body);
     try {
 
         if (!ownerID) {

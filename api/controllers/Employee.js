@@ -99,6 +99,9 @@ export const registerEmployee = {
         } else {
             try {
 
+                console.log("Marking employee as " + employeeId);
+
+
                 const attendance = new Attendance({
                     bossId: ownerID,
                     employeeId,
