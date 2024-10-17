@@ -24,5 +24,4 @@ app.listen(3000, () => {
     console.log("Server is running on port 3000")
     console.log(`public url ==> http://${ip}:3000`)
     console.log(`private url ==> http://localhost:3000`)
-
 });

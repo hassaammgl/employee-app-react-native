@@ -2,42 +2,94 @@ import {
 	ScrollView,
 	View,
 	Text,
-	Linking,
 	StyleSheet,
 	TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Link } from "expo-router";
 import { callOnPhoneNumber } from "../utils";
+import { useFocusEffect } from "expo-router";
+import axios from "axios";
+import moment from "moment";
+
+const api = "http://192.168.100.40:3000/api";
 
 const Profile = ({ data }) => {
+	const [profileData, setProfileData] = React.useState({});
+
+	const fetchEmployeeData = useCallback(async () => {
+		try {
+			const response = await axios.post(`${api}/get-employee-data`, {
+				ownerID:
+					"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MGZjMTA1YTVhNjY4NjgzMGEyYzA2ZSIsImlhdCI6MTcyOTE3NTM4MCwiZXhwIjoxNzI5MjYxNzgwfQ.kdE3pRgjR8CGltt2QlPW5eDvj7fQ7egqh2qxRoq2P7A",
+				employeeId: data,
+			});
+
+			console.log("response:", response.data.employeeData);
+			setProfileData(response.data.employeeData);
+		} catch (error) {
+			console.log(error);
+		}
+	}, [api]);
+
+	const memoizedfetchEmployeeData = useMemo(
+		() => fetchEmployeeData,
+		[fetchEmployeeData]
+	);
+
+	useFocusEffect(
+		useCallback(() => {
+			memoizedfetchEmployeeData();
+		}, [memoizedfetchEmployeeData])
+	);
+
 	const handleCallPress = (phoneNumber) => {
 		callOnPhoneNumber(phoneNumber);
 	};
 
 	return (
 		<ScrollView style={styles.container}>
-			<Avatar name={"Hassaam"} />
+			<Avatar name={`${profileData.firstName}`} />
 			<View style={styles.detailsContainer}>
-				<DetailsTextFeilds title={"Name"} value={"Hassaam Mughal"} />
-				<DetailsTextFeilds title={"Phone"} value={"0300-123456"} />
-				<DetailsTextFeilds title={"Address"} value={"Nankana Sahib"} />
-				<DetailsTextFeilds title={"City"} value={"bhatian chack"} />
-				<DetailsTextFeilds title={"CNIC"} value={"1232345177113"} />
-				<DetailsTextFeilds title={"Salary"} value={"5674"} />
-				<DetailsTextFeilds title={"Designation"} value={"Fighter"} />
-				<DetailsTextFeilds title={"Work Type"} value={"day by day"} />
+				<DetailsTextFeilds
+					title={"Name"}
+					value={`${profileData.firstName} ${profileData.lastName}`}
+				/>
+				<DetailsTextFeilds
+					title={"Phone"}
+					value={profileData.phoneNumber}
+				/>
+				<DetailsTextFeilds
+					title={"Address"}
+					value={profileData.address}
+				/>
+				<DetailsTextFeilds title={"City"} value={profileData.city} />
+				<DetailsTextFeilds title={"CNIC"} value={profileData.cnic} />
+				<DetailsTextFeilds
+					title={"Salary"}
+					value={profileData.salary}
+				/>
+				<DetailsTextFeilds
+					title={"Designation"}
+					value={profileData.designation}
+				/>
+				<DetailsTextFeilds
+					title={"Work Type"}
+					value={profileData.workType}
+				/>
 				<DetailsTextFeilds
 					title={"Date of Joining"}
-					value={"12-jun-2022"}
+					value={moment(profileData.dateOfJoining).format(
+						"MMMM Do YYYY, h:mm:ss a"
+					)}
 				/>
 			</View>
 			<View style={styles.buttonContainer}>
 				<Link
 					href={{
 						pathname: "/(forms)/editEmployee",
-						params: { _id: "sfafs dfg ergd fgy htry54r" },
+						params: { _id: profileData._id },
 					}}
 					asChild
 				>
@@ -47,7 +99,7 @@ const Profile = ({ data }) => {
 					</TouchableOpacity>
 				</Link>
 				<TouchableOpacity
-					onPress={() => handleCallPress("12345678901")}
+					onPress={() => handleCallPress(profileData.phoneNumber)}
 					style={styles.button}
 				>
 					<FontAwesome name="phone" size={20} color="white" />
@@ -133,8 +185,9 @@ const styles = StyleSheet.create({
 	},
 
 	detailsTextValue: {
-		fontSize: 20,
+		fontSize: 16,
 		marginLeft: 10,
+		flex: 1,
 	},
 	buttonContainer: {
 		flex: 1,

@@ -1,6 +1,6 @@
 import { StatusCodes, getReasonPhrase } from "http-status-codes";
 import { Employee } from "../models/Employee.js";
-import { User } from "../models/User.js";
+import { Attendance } from "../models/Attendance.js";
 
 
 export const registerEmployee = {
@@ -16,8 +16,8 @@ export const registerEmployee = {
             salary,
             designation,
             workType,
-            owner,
         } = req.body;
+        const owner = req.user;
         const isEmployeeExist = await Employee.findOne({ cnic });
         console.log("Not exists ", isEmployeeExist);
         if (isEmployeeExist) {
@@ -29,7 +29,6 @@ export const registerEmployee = {
         }
         else {
             try {
-                const user = await User.find();
                 const newEmployee = new Employee({
                     firstName,
                     lastName,
@@ -40,7 +39,7 @@ export const registerEmployee = {
                     salary,
                     designation,
                     workType,
-                    boss: user._id
+                    boss: owner,
                 });
                 await newEmployee.save();
                 return res.status(StatusCodes.CREATED).json({
@@ -49,6 +48,158 @@ export const registerEmployee = {
                 });
             }
             catch (error) {
+                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+                    success: false,
+                    error: getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR),
+                    message: error.message
+                });
+            }
+        }
+    },
+    getEmployeeData: async (req, res) => {
+        const { employeeId } = req.body;
+        const ownerID = req.user;
+        console.log(req.body);
+        if (employeeId === undefined || employeeId === null || employeeId === "") {
+            return res.status(StatusCodes.CONFLICT).json({
+                success: false,
+                error: getReasonPhrase(StatusCodes.CONFLICT),
+                message: "ID's are Required!"
+            });
+        } else {
+            try {
+                const employee = await Employee.findOne({ _id: employeeId, boss: ownerID })
+                console.log(employee);
+                return res.status(StatusCodes.OK).json({
+                    success: true,
+                    employeeData: employee,
+                    message: "Employee found successfully!",
+                });
+
+            } catch (error) {
+                console.error(error);
+                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+                    success: false,
+                    error: getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR),
+                    message: error.message
+                });
+            }
+        }
+    },
+    addAttendance: async (req, res) => {
+        const { employeeId } = req.body;
+        const ownerID = req.user;
+        console.log(req.body);
+        if (employeeId === undefined || employeeId === null || employeeId === "") {
+            return res.status(StatusCodes.CONFLICT).json({
+                success: false,
+                error: getReasonPhrase(StatusCodes.CONFLICT),
+                message: "ID's are Required!"
+            });
+        } else {
+            try {
+
+                const attendance = new Attendance({
+                    bossId: ownerID,
+                    employeeId,
+                })
+
+                console.log(attendance);
+                const employee = await Employee.findOne({ _id: employeeId, boss: ownerID });
+                employee.attendance = [attendance._id, ...employee.attendance];
+                console.log(employee);
+
+                await attendance.save();
+                await employee.save();
+
+                return res.status(StatusCodes.CREATED).json({
+                    success: true,
+                    message: "Attendance marked successfully!",
+                })
+
+
+            } catch (error) {
+                console.error(error);
+                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+                    success: false,
+                    error: getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR),
+                    message: error.message
+                });
+            }
+        }
+    },
+    getAttendanceData: async (req, res) => {
+        const { employeeId } = req.body;
+        const ownerID = req.user;
+        console.log(req.body);
+        if (employeeId === undefined || employeeId === null || employeeId === "" || ownerID === undefined || ownerID === null || ownerID === "") {
+            return res.status(StatusCodes.CONFLICT).json({
+                success: false,
+                error: getReasonPhrase(StatusCodes.CONFLICT),
+                message: "ID's are Required!"
+            });
+        } else {
+            try {
+
+                const employeeAttendanceData = await Employee.findOne({ _id: employeeId, boss: ownerID }).populate("attendance");
+                console.log(employeeAttendanceData);
+                if (employeeAttendanceData.attendance.length > 0) {
+                    return res.status(StatusCodes.OK).json({
+                        success: true,
+                        data: employeeAttendanceData,
+                        message: "Attendance has been successfully Found!"
+                    });
+                }
+                else {
+                    return res.status(StatusCodes.OK).json({
+                        success: true,
+                        data: employeeAttendanceData,
+                        message: "Not Attendance Found Yet!"
+                    });
+                }
+
+
+            } catch (error) {
+                console.error(error);
+                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+                    success: false,
+                    error: getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR),
+                    message: error.message
+                });
+            }
+        }
+    },
+    getAllEmployees: async (req, res) => {
+        const ownerID = req.user;
+        console.log(req.user);
+        if (!ownerID || ownerID === "") {
+            return res.status(StatusCodes.CONFLICT).json({
+                success: false,
+                error: getReasonPhrase(StatusCodes.CONFLICT),
+                message: "ID is Required!"
+            });
+        } else {
+            try {
+                const employees = await Employee.find({ boss: ownerID });
+                console.log(employees);
+                if (employees.length > 0) {
+
+                    return res.status(StatusCodes.OK).json({
+                        success: true,
+                        data: employees,
+                        message: "Employees founds successfully!"
+                    })
+                }
+                else {
+                    return res.status(StatusCodes.NOT_FOUND).json({
+                        success: false,
+                        data: employees,
+                        message: "Employees not found!",
+                    })
+                }
+
+            } catch (error) {
+                console.error(error);
                 return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
                     success: false,
                     error: getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR),

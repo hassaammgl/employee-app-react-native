@@ -41,12 +41,14 @@ const employeeSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
-    attendance: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Attendance"
-        }
-    ],
+    attendance:
+        [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Attendance"
+
+            }
+        ],
     boss: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"

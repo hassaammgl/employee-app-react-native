@@ -26,7 +26,7 @@ const EmployeeListCard = ({ data }) => {
 		<Link
 			href={{
 				pathname: "/(info)/[_id]",
-				params: { _id: "sfdsgsdgshgsdgsdfshgbv cbhdfhd" },
+				params: { _id: data._id },
 			}}
 			asChild
 		>
@@ -36,7 +36,7 @@ const EmployeeListCard = ({ data }) => {
 						width: 50,
 						height: 50,
 						borderRadius: 25,
-						backgroundColor: getRGBfromString("HAsasasfa"),
+						backgroundColor: getRGBfromString(data.firstName),
 						justifyContent: "center",
 						alignItems: "center",
 						marginRight: 10,
@@ -44,11 +44,13 @@ const EmployeeListCard = ({ data }) => {
 						justifyContent: "center",
 					}}
 				>
-					<Text style={styles.EmployeeListCardAvatarText}>A</Text>
+					<Text style={styles.EmployeeListCardAvatarText}>
+						{data.firstName.substring(0, 1)}
+					</Text>
 				</View>
 				<View style={styles.EmployeeListCardTextContainer}>
 					<Text style={styles.EmployeeListCardText}>
-						{"data.name"}
+						{data.firstName} {data.lastName}
 					</Text>
 				</View>
 				<View style={styles.EmployeeListCardIcon}>

@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const api = "http://192.168.100.40:3000/api";
+// http://localhost:3000/api/get-all-employees
 
 export const apiCalls = {
     registerUser: async ({
@@ -62,5 +63,7 @@ export const apiCalls = {
             console.log(err);
             return err;
         });
-    }
+    },
+
+
 }
