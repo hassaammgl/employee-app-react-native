@@ -99,10 +99,37 @@ export const registerEmployee = {
             });
         } else {
             try {
+                const check = await Attendance.find({ employeeId, bossId: ownerID });
 
+                // console.log(check);
+
+                //     
+
+                const day = date.split(" ")[1];
+                const month = date.split(" ")[0];
+                const c = check.map(e => {
+                    console.log("The date is : ", e.date);
+                    if (e.date.split(" ")[0] === month && e.date.split(" ")[1] === day) {
+                        console.log("Already marked");
+                        return e.date.split(" ")[0] === month && e.date.split(" ")[1] === day
+                    }
+                    else {
+                        console.log("Not marked");
+                        return e.date.split(" ")[0] === month && e.date.split(" ")[1] === day
+                    }
+                });
+
+                for (const i of c) {
+                    if (i) {
+                        return res.status(StatusCodes.CONFLICT).json({
+                            success: false,
+                            error: getReasonPhrase(StatusCodes.CONFLICT),
+                            message: "Attendance already marked!"
+                        });
+                    }
+
+                }
                 console.log("Marking employee as " + employeeId);
-
-
                 const attendance = new Attendance({
                     bossId: ownerID,
                     employeeId,
