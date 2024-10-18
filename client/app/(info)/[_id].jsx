@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React, { Suspense, lazy } from "react";
 import Header from "../../components/Header";
 import { LinearGradient } from "expo-linear-gradient";
-import { useFocusEffect, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 
 const Profile = lazy(() => import("../../components/Profile"));
 

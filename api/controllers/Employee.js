@@ -1,6 +1,7 @@
 import { StatusCodes, getReasonPhrase } from "http-status-codes";
 import { Employee } from "../models/Employee.js";
 import { Attendance } from "../models/Attendance.js";
+import moment from "moment";
 
 
 export const registerEmployee = {
@@ -210,5 +211,67 @@ export const registerEmployee = {
                 });
             }
         }
-    }
+    },
+    getAllPresentEmployees: async (req, res) => {
+        const { month, date } = req.body;
+        const ownerID = req.user;
+
+        if (month === undefined || month === null || month === "" || date === undefined || date === null || date === "") {
+            return res.status(StatusCodes.CONFLICT).json({
+                success: false,
+                error: getReasonPhrase(StatusCodes.CONFLICT),
+                message: "Date and Month are Required!"
+            })
+
+        }
+
+        console.log(req.user);
+        if (!ownerID || ownerID === "") {
+            return res.status(StatusCodes.CONFLICT).json({
+                success: false,
+                error: getReasonPhrase(StatusCodes.CONFLICT),
+                message: "ID is Required!"
+            });
+        } else {
+            try {
+                const employees = await Employee.find({ boss: ownerID }).populate("attendance");
+                if (employees.length > 0) {
+                    console.log(req.body);
+
+                    const presentEmployees = employees.map(employee => {
+                        const attendance = employee.attendance.filter(att => (
+                            att.date.split(" ")[0] === month && att.date.split(" ")[1] === date
+                        ));
+                        return attendance.length > 0 ? employee : null;
+
+
+                    });
+                    const presents = presentEmployees.filter(employee => employee !== null);
+                    console.log("pe: ", presents);
+                    return res.status(StatusCodes.OK).json({
+                        success: true,
+                        data: presents.length,
+                        message: "Employees founds successfully!"
+                    })
+                }
+                else {
+                    return res.status(StatusCodes.NOT_FOUND).json({
+                        success: false,
+                        data: employees,
+                        message: "Employees not found!",
+                    })
+                }
+
+            } catch (error) {
+                console.error(error);
+                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+                    success: false,
+                    error: getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR),
+                    message: error.message
+                });
+            }
+        }
+    },
 }
+
+

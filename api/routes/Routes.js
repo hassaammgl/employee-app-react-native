@@ -15,6 +15,7 @@ router.post("/add-attendance", verifyToken, Employee.addAttendance);
 router.post("/get-employee-data", verifyToken, Employee.getEmployeeData);
 router.get("/get-attendance-data", verifyToken, Employee.getAttendanceData);
 router.post("/get-all-employees", verifyToken, Employee.getAllEmployees);
+router.post("/get-all-present-employees", verifyToken, Employee.getAllPresentEmployees);
 
 
 export { router };

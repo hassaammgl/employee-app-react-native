@@ -1,7 +1,7 @@
 import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
 import React from "react";
 import { Link } from "expo-router";
-import { Entypo, Feather } from "@expo/vector-icons";
+import { Entypo, Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { callOnPhoneNumber } from "../utils";
 import axios from "axios";
 
@@ -191,7 +191,7 @@ const AttendanceEmployeeListCard = ({ data }) => {
 					width: 50,
 					height: 50,
 					borderRadius: 25,
-					backgroundColor: getRGBfromString("MAsasasfa"),
+					backgroundColor: getRGBfromString(data.firstName),
 					justifyContent: "center",
 					alignItems: "center",
 					marginRight: 10,
@@ -199,17 +199,30 @@ const AttendanceEmployeeListCard = ({ data }) => {
 					justifyContent: "center",
 				}}
 			>
-				<Text style={styles.EmployeeListCardAvatarText}>M</Text>
+				<Text style={styles.EmployeeListCardAvatarText}>
+					{data.firstName.substring(0, 1)}
+				</Text>
 			</View>
 			<View style={styles.EmployeeListCardTextContainer}>
-				<Text style={styles.EmployeeListCardText}>{"data.name"}</Text>
+				<Text style={styles.EmployeeListCardText}>
+					{data.firstName} {data.lastName}
+				</Text>
 			</View>
-			<TouchableOpacity style={styles.EmployeeListCardBtn}>
-				<Text style={styles.EmployeeListCardBtnText}>Presents</Text>
-			</TouchableOpacity>
-			<TouchableOpacity style={styles.EmployeeListCardBtn}>
-				<Text style={styles.EmployeeListCardBtnText}>Absents</Text>
-			</TouchableOpacity>
+			<Link
+				href={{
+					pathname: `/(info)/PresentDays`,
+					params: { _id: data._id },
+				}}
+				asChild
+			>
+				<TouchableOpacity style={styles.EmployeeListCardIcon}>
+					<MaterialCommunityIcons
+						name="information"
+						size={24}
+						color="white"
+					/>
+				</TouchableOpacity>
+			</Link>
 		</View>
 	);
 };
