@@ -19,7 +19,9 @@ const PresentDays = () => {
 		moment().format("MMMM Do YYYY").split(" ")[0]
 	);
 
-	useEffect(() => {}, [month]);
+	useEffect(() => {
+		
+	}, [month]);
 
 	return (
 		<LinearGradient

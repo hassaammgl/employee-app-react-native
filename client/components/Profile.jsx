@@ -22,7 +22,7 @@ const Profile = ({ data }) => {
 		try {
 			const response = await axios.post(`${api}/get-employee-data`, {
 				ownerID:
-					"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MGZjMTA1YTVhNjY4NjgzMGEyYzA2ZSIsImlhdCI6MTcyOTE3NTM4MCwiZXhwIjoxNzI5MjYxNzgwfQ.kdE3pRgjR8CGltt2QlPW5eDvj7fQ7egqh2qxRoq2P7A",
+					"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MGZjMTA1YTVhNjY4NjgzMGEyYzA2ZSIsImlhdCI6MTcyOTI4OTU4OSwiZXhwIjoxNzI5Mzc1OTg5fQ.KSLJB-UATLg3qt4AM1FZavZ-SfgOsNqbeoNzRDJ9rwI",
 				employeeId: data,
 			});
 

@@ -88,7 +88,7 @@ export const registerEmployee = {
         }
     },
     addAttendance: async (req, res) => {
-        const { employeeId } = req.body;
+        const { employeeId, date } = req.body;
         const ownerID = req.user;
         console.log(req.body);
         if (employeeId === undefined || employeeId === null || employeeId === "") {
