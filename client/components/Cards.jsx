@@ -56,7 +56,7 @@ const EmployeeListCard = ({ data }) => {
 	);
 };
 
-// [TODO:]
+// [TODO:] fix attendace
 
 const MarkAttendanceCard = ({ data }) => {
 	const handlePressAttendance = async () => {
